@@ -1,0 +1,29 @@
+{
+  "id": "deploy-test",
+  "name": "Deploy Test",
+  "description": "Testing deploy pipeline",
+  "identity": {
+    "actor_types": [
+      {
+        "key": "user",
+        "label": "User"
+      }
+    ],
+    "default_actor_type": "user"
+  },
+  "skills": [
+    {
+      "id": "echo-skill",
+      "name": "Echo Skill",
+      "role": "gateway"
+    }
+  ],
+  "platform_connectors": [
+    "echo-mcp"
+  ],
+  "routing": {
+    "api": {
+      "default_skill": "echo-skill"
+    }
+  }
+}

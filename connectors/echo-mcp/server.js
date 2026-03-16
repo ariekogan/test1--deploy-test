@@ -1,9 +1,10 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { ListToolsRequestSchema, CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 const server = new Server({ name: 'echo-mcp', version: '2.0.0' }, { capabilities: { tools: {} } });
 
-server.setRequestHandler('tools/list', async () => ({
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [{
     name: 'echo',
     description: 'Echo back input v2',
@@ -11,7 +12,7 @@ server.setRequestHandler('tools/list', async () => ({
   }]
 }));
 
-server.setRequestHandler('tools/call', async (req) => {
+server.setRequestHandler(CallToolRequestSchema, async (req) => {
   if (req.params.name === 'echo') {
     return { content: [{ type: 'text', text: `ECHO v2: ${req.params.arguments?.message}` }] };
   }

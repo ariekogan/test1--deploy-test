@@ -1,0 +1,177 @@
+{
+  "id": "echo-skill",
+  "name": "Echo Skill",
+  "description": "Echo back what the user says",
+  "version": "1.0.0",
+  "phase": "TOOL_DEFINITION",
+  "ui_capable": false,
+  "connectors": [
+    "echo-mcp"
+  ],
+  "problem": {
+    "statement": "Echo back what the user says",
+    "context": "Echo back what the user says",
+    "goals": [
+      "Enable echo back input"
+    ]
+  },
+  "tools": [
+    {
+      "id": "tool-echo",
+      "id_status": "permanent",
+      "name": "echo",
+      "description": "Echo back input",
+      "inputs": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": false,
+          "description": "Message to echo"
+        }
+      ],
+      "output": {
+        "type": "object",
+        "description": "Echoed message"
+      },
+      "source": {
+        "type": "mcp_bridge",
+        "connection_id": "echo-mcp",
+        "mcp_tool": "echo"
+      },
+      "policy": {
+        "allowed": "always"
+      },
+      "mock": {
+        "enabled": true,
+        "mode": "examples",
+        "examples": [
+          {
+            "id": "tool-echo-auto",
+            "input": {},
+            "output": {
+              "success": true,
+              "data": {}
+            },
+            "description": "Auto-generated example for echo"
+          }
+        ]
+      },
+      "security": {
+        "classification": "public"
+      }
+    }
+  ],
+  "intents": {
+    "supported": [
+      {
+        "id": "echo",
+        "description": "Echo back input",
+        "examples": [
+          "Echo back input",
+          "I need to echo back input",
+          "Can you echo back input?",
+          "Please echo back input"
+        ],
+        "maps_to_workflow": "echo_flow"
+      }
+    ],
+    "thresholds": {
+      "accept": 0.85,
+      "clarify": 0.6,
+      "reject": 0.4
+    },
+    "out_of_domain": {
+      "action": "redirect",
+      "message": "This request is outside my capabilities.",
+      "suggest_domains": []
+    }
+  },
+  "policy": {
+    "guardrails": {
+      "never": [],
+      "always": []
+    },
+    "workflows": [
+      {
+        "id": "echo_flow",
+        "name": "Echo back input",
+        "description": "Auto-generated workflow for echo",
+        "trigger": "echo",
+        "steps": [
+          "echo"
+        ],
+        "required": false,
+        "on_deviation": "warn"
+      }
+    ],
+    "approvals": [],
+    "escalation": {
+      "enabled": false,
+      "conditions": []
+    }
+  },
+  "scenarios": [
+    {
+      "id": "echo",
+      "title": "Echo back input",
+      "description": "Test scenario for echo",
+      "steps": [
+        "User says: \"Echo back input\"",
+        "Agent calls echo — echo back input",
+        "Agent presents results to the user"
+      ],
+      "expected_outcome": "User request for echo is handled successfully."
+    }
+  ],
+  "role": {
+    "name": "Echo Skill",
+    "persona": "You are a helpful assistant that echo back what the user says. You have access to tools for: Echo back input.",
+    "goals": [
+      "Enable echo back input"
+    ],
+    "limitations": [
+      "Operates only within defined tool capabilities"
+    ],
+    "communication_style": {
+      "tone": "casual",
+      "verbosity": "concise"
+    }
+  },
+  "engine": {
+    "model": "claude-sonnet-4-20250514",
+    "temperature": 0.3,
+    "rv2": {
+      "max_iterations": 10,
+      "iteration_timeout_ms": 30000,
+      "allow_parallel_tools": false,
+      "on_max_iterations": "fail"
+    },
+    "hlr": {
+      "enabled": true,
+      "critic": {
+        "enabled": false,
+        "strictness": "medium"
+      },
+      "reflection": {
+        "enabled": false,
+        "depth": "shallow"
+      }
+    },
+    "autonomy": {
+      "level": "autonomous"
+    }
+  },
+  "grant_mappings": [],
+  "access_policy": {
+    "rules": [
+      {
+        "tools": [
+          "*"
+        ],
+        "effect": "allow"
+      }
+    ]
+  },
+  "response_filters": [],
+  "triggers": []
+}

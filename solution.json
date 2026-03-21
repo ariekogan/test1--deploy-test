@@ -1,6 +1,7 @@
 {
   "id": "deploy-test",
   "name": "Deploy Test",
+  "version": "1.0.0",
   "description": "Testing deploy pipeline",
   "identity": {
     "actor_types": [
@@ -9,7 +10,9 @@
         "label": "User"
       }
     ],
-    "default_actor_type": "user"
+    "admin_roles": [],
+    "default_actor_type": "user",
+    "default_roles": []
   },
   "skills": [
     {
@@ -18,12 +21,15 @@
       "role": "gateway"
     }
   ],
-  "platform_connectors": [
-    "echo-mcp"
-  ],
+  "grants": [],
+  "handoffs": [],
   "routing": {
     "api": {
       "default_skill": "echo-skill"
     }
-  }
+  },
+  "platform_connectors": [
+    "echo-mcp"
+  ],
+  "security_contracts": []
 }

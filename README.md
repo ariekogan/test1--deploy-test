@@ -11,7 +11,7 @@ Testing deploy pipeline
 
 ## Connectors
 
-- **Echo MCP** (stdio)
+- **echo-mcp** (stdio)
 
 ## Repo Structure
 
